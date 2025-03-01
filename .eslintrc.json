@@ -1,0 +1,41 @@
+{
+    "env": {
+      "browser": true,       // Habilita variáveis globais do navegador (ex: `document`, `window`)
+      "es2021": true,        // Habilita funcionalidades do ES2021
+      "jquery": true         // Habilita variáveis globais do jQuery
+    },
+    "extends": [
+      "eslint:recommended",  // Usa as regras recomendadas do ESLint
+      "plugin:security/recommended"  // Adiciona regras de segurança recomendadas
+    ],
+    "parserOptions": {
+      "ecmaVersion": 12,     // Define a versão do ECMAScript
+      "sourceType": "module" // Permite o uso de módulos ES6
+    },
+    "plugins": [
+      "security"             // Adiciona o plugin de segurança
+    ],
+    "rules": {
+      // Regras gerais de boas práticas
+      "no-console": "warn",  // Avisa sobre o uso de `console.log`
+      "no-unused-vars": "warn",  // Avisa sobre variáveis não utilizadas
+      "no-undef": "error",   // Erro ao usar variáveis não definidas
+      "no-implicit-globals": "error",  // Evita a criação de variáveis globais implicitamente
+  
+      // Regras de segurança
+      "no-eval": "error",    // Proíbe o uso de `eval` (pode levar a injeção de código)
+      "no-implied-eval": "error",  // Proíbe funções que podem executar código implicitamente (ex: `setTimeout` com string)
+      "no-script-url": "error",  // Proíbe o uso de `javascript:` em URLs (pode levar a XSS)
+      "security/detect-object-injection": "warn",  // Avisa sobre possíveis injeções de objetos
+      "security/detect-eval-with-expression": "error",  // Erro ao usar `eval` com expressões dinâmicas
+      "security/detect-non-literal-fs-filename": "warn",  // Avisa sobre o uso de caminhos de arquivo não literais
+      "security/detect-non-literal-regexp": "warn",  // Avisa sobre o uso de expressões regulares não literais
+      "security/detect-possible-timing-attacks": "warn",  // Avisa sobre possíveis ataques de temporização
+      "security/detect-pseudoRandomBytes": "warn",  // Avisa sobre o uso de `pseudoRandomBytes` inseguro
+      "security/detect-buffer-noassert": "warn",  // Avisa sobre o uso de `noassert` em operações de buffer
+      "security/detect-child-process": "warn",  // Avisa sobre o uso de `child_process` (pode levar a execução de comandos inseguros)
+      "security/detect-disable-mustache-escape": "warn",  // Avisa sobre a desabilitação de escape em templates
+      "security/detect-no-csrf-before-method-override": "warn",  // Avisa sobre a falta de proteção CSRF
+      "security/detect-unsafe-regex": "warn"  // Avisa sobre expressões regulares potencialmente inseguras
+    }
+  }

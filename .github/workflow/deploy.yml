@@ -1,0 +1,39 @@
+name: Deploy Dynamic Weather Site with SAST
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Baixa o código do repositório
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Passo 2: Substitui a chave da API no arquivo HTML
+      - name: Replace API Key
+        run: |
+          sed -i "s/WEATHERAPI_KEY/${{ secrets.WEATHERAPI_KEY }}/g" index.html
+
+      # Passo 3: Executa SAST no código JavaScript
+      - name: Run SAST (ESLint)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install ESLint
+        run: |
+          npm install eslint eslint-plugin-security --save-dev
+      - name: Run ESLint
+        run: |
+          npx eslint .
+
+      # Passo 4: Faz o deploy no GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./  # Publica o arquivo index.html na raiz

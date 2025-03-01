@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Tempo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Consulta de Tempo</h1>
+    <input type="text" id="cidade" placeholder="Digite o nome da cidade">
+    <button onclick="consultarTempo()">Consultar</button>
+    <div id="resultado"></div>
+
+    <script>
+        async function consultarTempo() {
+            const cidade = document.getElementById('cidade').value;
+            const apiKey = 'SUA_CHAVE_WEATHERAPI';  // Substitua pela sua chave da WeatherAPI
+            const settings = {
+                async: true,
+                crossDomain: true,
+                url: `https://weatherapi-com.p.rapidapi.com/forecast.json?q=${cidade}&days=3`,
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-key': apiKey,
+                    'x-rapidapi-host': 'weatherapi-com.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await $.ajax(settings);
+                const temperatura = response.current.temp_c;
+                const descricao = response.current.condition.text;
+                document.getElementById('resultado').innerHTML = `
+                    <p><strong>Cidade:</strong> ${response.location.name}</p>
+                    <p><strong>Temperatura:</strong> ${temperatura}°C</p>
+                    <p><strong>Condição:</strong> ${descricao}</p>
+                `;
+            } catch (error) {
+                document.getElementById('resultado').innerHTML = `<p>Erro ao consultar o tempo. Tente novamente.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
